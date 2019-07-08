@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { CsvUploaderComponent } from './csv-uploader/csv-uploader.component';
 import { CsvTableComponent } from './csv-table/csv-table.component';
 import { AppDataService } from './appdata.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { AppDataService } from './appdata.service';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [AppDataService],
   bootstrap: [AppComponent]
