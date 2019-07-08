@@ -7,12 +7,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AppDataService {
-  SERVER_URL: 'http://localhost:3000';
 
   constructor(private httpClient: HttpClient) { }
 
-  public upload(data): Observable<string> {
-    const uploadURL = `${this.SERVER_URL}/api/csv/upload`;
+  public upload(data) {
+    const uploadURL = `/api/csv/upload`;
 
     return this.httpClient.post<any>(uploadURL, data, {
       reportProgress: true,
@@ -22,11 +21,10 @@ export class AppDataService {
         case HttpEventType.UploadProgress:
           const progress = Math.round(100 * event.loaded / event.total);
           return { status: 'progress', message: progress };
-
         case HttpEventType.Response:
-          return event.body;
+          return { status: 'finished', message: 100 };
         default:
-          return `Unhandled event: ${event.type}`;
+          return { status: `unknown: ${event.type}`, message: 0 };
       }
     })
     );
