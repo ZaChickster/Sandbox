@@ -36,5 +36,12 @@ namespace AngularUX.Controllers
                 return BadRequest();
             }
         }
-    }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> Table(CancellationToken token)
+        {
+			JsonResult result = new JsonResult(await _logic.GetData(token));
+	        return result;
+        }
+	}
 }
