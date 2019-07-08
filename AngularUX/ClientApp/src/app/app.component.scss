@@ -1,0 +1,26 @@
+.header {
+  h1 {
+    float:left;
+    vertical-align: top;
+    margin: 10px 0 0 0;
+    padding: 0;
+  }
+
+  img {
+    float: left;
+    width: 50px;
+    margin-left: 10px;
+  }
+}
+.links {
+  clear: both;
+
+  li {
+    display: inline-block;
+    margin: 5px;
+
+    a {
+      cursor: pointer;
+    }
+  }
+}
