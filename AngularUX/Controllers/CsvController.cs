@@ -1,7 +1,10 @@
 using System;
 using System.IO;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
+using Backend.Core;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AngularUX.Controllers
@@ -9,27 +12,28 @@ namespace AngularUX.Controllers
     [Route("api/[controller]")]
     public class CsvController : Controller
     {
-        [HttpPost("[action]")]
-        public async Task<IActionResult> Upload()
-        {
-            try
-            {
-                var file = Request.Form.Files[0];
+	    private ICsvLogic _logic;
 
-                Console.WriteLine($"*** Uploaded file length: {file?.Length}");
-                
-                if (file.Length > 0)
-                {
-                    return Ok();
-                }
-                else
-                {
-                    return BadRequest();
-                }
-            }
-            catch (Exception ex)
+	    public CsvController(ICsvLogic logic)
+	    {
+		    _logic = logic;
+	    }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Upload(CancellationToken token)
+        {
+            IFormFile file = Request.Form.Files[0];
+
+            Console.WriteLine($"*** Uploaded file length: {file?.Length}");
+            
+            if (file.Length > 0)
             {
-                return StatusCode(500, "Internal server error");
+                await _logic.InsertCsvData(file.OpenReadStream(), token);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
             }
         }
     }

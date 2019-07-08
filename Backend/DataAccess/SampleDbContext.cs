@@ -11,7 +11,7 @@ namespace Backend.DataAccess
 	{
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlite("Data Source=sample.db");
+			optionsBuilder.UseSqlite("Data Source=C:/data/sample.db");
 		}
 
 		public DbSet<FileData> Data { get; set; }
