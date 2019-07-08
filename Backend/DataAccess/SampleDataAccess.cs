@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.DataAccess
 {
@@ -23,9 +24,14 @@ namespace Backend.DataAccess
 			return await _db.SaveChangesAsync(true, token);
 		}
 
-		public IEnumerable<FileData> GetSampleData()
+		public async Task<IEnumerable<FileData>> GetSampleData(CancellationToken token)
 		{
-			return _db.Data.ToList();
+			return await _db.Data.ToListAsync(token);
+		}
+
+		public void Dispose()
+		{
+			_db?.Dispose();
 		}
 	}
 }

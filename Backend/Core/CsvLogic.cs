@@ -12,7 +12,7 @@ using CsvHelper.Configuration;
 
 namespace Backend.Core
 {
-	public class CsvLogic
+	public class CsvLogic : ICsvLogic
 	{
 		private readonly ISampleDataAccess _data;
 
@@ -29,8 +29,11 @@ namespace Backend.Core
 
 		public async Task<int> InsertCsvData(Stream file, CancellationToken token)
 		{
-			IEnumerable<FileData> records = ReadFile(file);
-			return await _data.InsertData(records, token);
+			using (_data)
+			{
+				IEnumerable<FileData> records = ReadFile(file);
+				return await _data.InsertData(records, token);
+			}
 		}
 
 		public IEnumerable<FileData> ReadFile(Stream file)
@@ -39,6 +42,14 @@ namespace Backend.Core
 			using (var csv = new CsvReader(reader, _configuration))
 			{
 				return csv.GetRecords<FileData>().ToList();
+			}
+		}
+
+		public async Task<IEnumerable<FileData>> GetData(CancellationToken token)
+		{
+			using (_data)
+			{
+				return await _data.GetSampleData(token);
 			}
 		}
 	}

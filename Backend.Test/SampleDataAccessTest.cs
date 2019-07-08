@@ -33,7 +33,7 @@ namespace Backend.Test
 
 			done.Should().Be(2);
 
-			IEnumerable<FileData> records = _data.GetSampleData();
+			IEnumerable<FileData> records = await _data.GetSampleData(CancellationToken.None);
 
 			records.Count().Should().BeGreaterThan(0);
 			records.Count(f => f.UniqueId <= 0).Should().Be(0);

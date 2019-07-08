@@ -1,11 +1,12 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Backend.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.DataAccess
 {
-	public interface ISampleDbContext
+	public interface ISampleDbContext : IDisposable
 	{
 		DbSet<FileData> Data { get; set; }
 		Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken);
