@@ -15,7 +15,7 @@ namespace Backend.Test
 
 		public CsvLogicTest()
 		{
-			_logic = new CsvLogic();
+			_logic = new CsvLogic(null);
 		}
 
 		[Fact]

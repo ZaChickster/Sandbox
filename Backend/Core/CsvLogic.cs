@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Backend.DataAccess;
 using Backend.Models;
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -11,20 +14,23 @@ namespace Backend.Core
 {
 	public class CsvLogic
 	{
+		private readonly ISampleDataAccess _data;
+
 		private readonly Configuration _configuration = new Configuration
 		{
 			HasHeaderRecord = true
 		};
 
-		public CsvLogic()
+		public CsvLogic(ISampleDataAccess data)
 		{
+			_data = data;
 			_configuration.RegisterClassMap<FileDataMap>();
 		}
 
-		public int InsertCsvData(Stream file)
+		public async Task<int> InsertCsvData(Stream file, CancellationToken token)
 		{
 			IEnumerable<FileData> records = ReadFile(file);
-			return records?.Count() ?? 0;
+			return await _data.InsertData(records, token);
 		}
 
 		public IEnumerable<FileData> ReadFile(Stream file)
