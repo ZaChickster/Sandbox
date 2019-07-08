@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend", "Backend\Backend.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AngularUX", "AngularUX\AngularUX.csproj", "{7908F5FB-7E86-4CFD-92A2-75B768FAEB2F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Test", "Backend.Test\Backend.Test.csproj", "{FC401C40-F4C6-48AD-B5B5-BC7455AAF703}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7908F5FB-7E86-4CFD-92A2-75B768FAEB2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7908F5FB-7E86-4CFD-92A2-75B768FAEB2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7908F5FB-7E86-4CFD-92A2-75B768FAEB2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC401C40-F4C6-48AD-B5B5-BC7455AAF703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC401C40-F4C6-48AD-B5B5-BC7455AAF703}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC401C40-F4C6-48AD-B5B5-BC7455AAF703}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC401C40-F4C6-48AD-B5B5-BC7455AAF703}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
