@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CsvTableComponent } from './csv-table.component';
+import { AppDataService } from '../utils/appdata.service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CsvTableComponent', () => {
   let component: CsvTableComponent;
@@ -8,7 +10,9 @@ describe('CsvTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CsvTableComponent ]
+      declarations: [ CsvTableComponent ],
+      imports: [ HttpClientModule ],
+      providers: [ AppDataService ]
     })
     .compileComponents();
   }));
