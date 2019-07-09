@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { FileData } from './filedata.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,19 @@ export class AppDataService {
       }
     })
     );
+  }
+
+  public loadData(): Observable<FileData[]> {
+    const dataUrl = `/api/csv/table`;
+
+    return this.httpClient.get<any[]>(dataUrl).pipe(map(result => {
+      const converted: FileData[] = [];
+
+      result.forEach((dto, idx, col) => {
+        converted.push(new FileData(dto));
+      });
+
+      return converted;
+    }));
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AppDataService } from '../appdata.service';
+import { AppDataService } from '../utils/appdata.service';
 
 @Component({
   selector: 'app-csv-uploader',

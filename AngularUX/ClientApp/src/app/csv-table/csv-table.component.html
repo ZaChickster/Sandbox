@@ -1,1 +1,21 @@
-<p>csv-table works!</p>
+<h2>Database Contents</h2>
+<div class="datacontainer">
+  <table>
+    <thead>
+      <tr>
+        <th>Unique ID</th>
+        <th>Email Address</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let model of allData">
+        <td>{{ model.uniqueId }}</td>
+        <td>{{ model.emailAddress }}</td>
+        <td>{{ model.firstName }}</td>
+        <td>{{ model.lastName }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
