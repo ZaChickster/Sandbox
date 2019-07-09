@@ -5,5 +5,13 @@
 
   table {
     width: 100%;
+
+    tr {
+      width: 25%;
+
+      td, th {
+        text-align: left;
+      }
+    }
   }
 }
