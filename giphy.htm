@@ -11,29 +11,29 @@
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script>
-			$(document).ready(function() {
-				const search$ = $('#search-box');				
-				const button$ = $('#button');				
-				const destination$ = $('#destination');
+			$(document).ready(() => {
+				const $search = $('#search-box');				
+				const $button = $('#button');				
+				const $destination = $('#destination');
 				
-				const singleCallback = function(single) {
+				const singleCallback = single => {
 					if (single && single.data && single.data.images && single.data.images['fixed_height']) {
-						destination$.empty();
-						destination$.append($(`<img src="${single.data.images['fixed_height'].url}"/>`));
+						$destination.empty();
+						$destination.append($(`<img src="${single.data.images['fixed_height'].url}"/>`));
 					}
 				};
 				
-				const listCallback = function(list) {
+				const listCallback = list => {
 					if (list && list.data && list.data[0]) {
 						$.get(`http://api.giphy.com/v1/gifs/${list.data[0].id}?api_key=dc6zaTOxFJmzC`, singleCallback);
 					}
 				};
 				
-				const buttonCallback = function(e) {
-					$.get(`https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=${search$.val()}`, listCallback);
+				const buttonCallback = e => {
+					$.get(`https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=${$search.val()}`, listCallback);
 				};
 				
-				button$.click(buttonCallback);
+				$button.click(buttonCallback);
 			});
 		</script>
 	</body>

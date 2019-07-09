@@ -17,20 +17,20 @@ export class CsvUploaderComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      avatar: ['']
+      csvFile: ['']
     });
   }
 
   onFileChange(event) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.form.get('avatar').setValue(file);
+      this.form.get('csvFile').setValue(file);
     }
   }
 
   onSubmit() {
     const formData = new FormData();
-    formData.append('file', this.form.get('avatar').value);
+    formData.append('file', this.form.get('csvFile').value);
 
     this.uploadService.upload(formData).subscribe(
       (res) => this.uploadResponse = res,
