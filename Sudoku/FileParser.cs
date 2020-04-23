@@ -4,10 +4,14 @@ using System.Linq;
 
 namespace Sudoku
 {
-    public class FileParser
+    public interface IFileParser
     {
-        public const string WRONG_ROW_LENGTH = "invalid row size";
-        public const string NON_NUMERIC = "row contains non-numeric chars or zeros";
+        SudokuFile ParseFile(string filename);
+    }
+
+    public class FileParser : IFileParser
+    {
+        public const string BAD_ROW = "row does not contain non zero integers";
         public const string FILE_TOO_LONG = "too many rows in file";
         public const string FILE_TOO_SHORT = "too few rows in file";
 
@@ -52,13 +56,9 @@ namespace Sudoku
         public List<int> ParseRow(string row)
         {
             char[] onlyNumbers = row.Where(c => char.IsDigit(c) && int.Parse(c.ToString()) > 0).ToArray();
-            char[] nowhitespace = row.Where(c => !char.IsWhiteSpace(c)).ToArray();
-
-            if (new string(onlyNumbers) != new string(nowhitespace))
-                throw new Exception(NON_NUMERIC);
 
             if (onlyNumbers.Length != 9)
-                throw new Exception(WRONG_ROW_LENGTH);
+                throw new Exception($"{BAD_ROW}: '{row}'");
 
             return onlyNumbers.Select(c => int.Parse(c.ToString())).ToList();
         }

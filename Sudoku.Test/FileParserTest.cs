@@ -60,7 +60,7 @@ namespace Sudoku.Test
         {
             var ex = Assert.Throws<Exception>(() => _parser.ParseRow("4 1 7 3 0 9 8 2 5"));
 
-            Assert.Equal(FileParser.NON_NUMERIC, ex.Message);
+            Assert.Contains(FileParser.BAD_ROW, ex.Message);
         }
 
         [Fact]
@@ -90,7 +90,7 @@ namespace Sudoku.Test
         {
             var ex = Assert.Throws<Exception>(() => _parser.ParseRow("4 1 7 3 6 9 8 2 5 9 1"));
 
-            Assert.Equal(FileParser.WRONG_ROW_LENGTH, ex.Message);
+            Assert.Contains(FileParser.BAD_ROW, ex.Message);
         }
 
         [Fact]
@@ -98,7 +98,7 @@ namespace Sudoku.Test
         {
             var ex = Assert.Throws<Exception>(() => _parser.ParseRow("4 1 a 3 6 . 8 2 5"));
 
-            Assert.Equal(FileParser.NON_NUMERIC, ex.Message);
+            Assert.Contains(FileParser.BAD_ROW, ex.Message);
         }
     }
 }

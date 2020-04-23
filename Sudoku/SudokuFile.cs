@@ -47,7 +47,7 @@ namespace Sudoku
 
         public SudokuFile ValidateRow(int i)
         {
-            return ValidateSection(_rawData[i], $"row {i}");
+            return ValidateSection(_rawData[i], $"row {i + 1}");
         }
 
         public SudokuFile ValidateColumn(int i)
@@ -55,7 +55,7 @@ namespace Sudoku
             List<int> columnInts = new List<int>();
             _rawData.ForEach(r => columnInts.Add(r[i]));
 
-            return ValidateSection(columnInts, $"column {i}");
+            return ValidateSection(columnInts, $"column {i + 1}");
         }
 
         public SudokuFile ValidateCube(int startX, int startY)
@@ -73,7 +73,7 @@ namespace Sudoku
                 _rawData[startX + 2][startY + 2]
             };
 
-            return ValidateSection(columnInts, $"cube ({startX}, {startY})");
+            return ValidateSection(columnInts, $"cube ({startX + 1}, {startY + 1})");
         }
 
         private SudokuFile ValidateSection(List<int> columnInts, string message)
