@@ -21,6 +21,11 @@ namespace Sudoku
             return this;
         }
 
+        // Combinations of these three values constitue 
+        // the upper left corner of each cube section of 
+        // the Sudoku board.  Other 8 values are calculated.
+        private static readonly int[] _cubeIndicies = { 0, 3, 6 };
+
         public SudokuFile Validate()
         {
             for(int i = 0; i < 9; i++)
@@ -29,15 +34,13 @@ namespace Sudoku
                 ValidateColumn(i);
             }
 
-            ValidateCube(0, 0);
-            ValidateCube(3, 0);
-            ValidateCube(6, 0);
-            ValidateCube(0, 3);
-            ValidateCube(3, 3);
-            ValidateCube(6, 3);
-            ValidateCube(0, 6);
-            ValidateCube(3, 6);
-            ValidateCube(6, 6);
+            foreach(int x in _cubeIndicies)
+            {
+                foreach(int y in _cubeIndicies)
+                {
+                    ValidateCube(x, y);
+                }
+            }
 
             return this;
         }
@@ -57,18 +60,18 @@ namespace Sudoku
 
         public SudokuFile ValidateCube(int startX, int startY)
         {
-            List<int> columnInts = new List<int>
+            List<int> columnInts = new List<int>();
+
+            // starting from upper left of cube to validate,
+            // find the other eight values; aka two columns over
+            // and two rows down.
+            for (int x = 0; x < 3; x++)
             {
-                _rawData[startX][startY],
-                _rawData[startX][startY + 1],
-                _rawData[startX][startY + 2],
-                _rawData[startX + 1][startY],
-                _rawData[startX + 1][startY + 1],
-                _rawData[startX + 1][startY + 2],
-                _rawData[startX + 2][startY],
-                _rawData[startX + 2][startY + 1],
-                _rawData[startX + 2][startY + 2]
-            };
+                for (int y = 0; y < 3; y++)
+                {
+                    columnInts.Add(_rawData[startX + x][startY + y]);
+                }
+            }
 
             return ValidateSection(columnInts, $"cube ({startX + 1}, {startY + 1})");
         }
