@@ -1,6 +1,4 @@
 using System;
-using System.IO;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Backend.Core;
@@ -9,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AngularUX.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     public class CsvController : Controller
     {
 	    private ICsvLogic _logic;

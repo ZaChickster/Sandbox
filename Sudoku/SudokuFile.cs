@@ -76,7 +76,7 @@ namespace Sudoku
             return ValidateSection(columnInts, $"cube ({startX}, {startY})");
         }
 
-        public SudokuFile ValidateSection(List<int> columnInts, string message)
+        private SudokuFile ValidateSection(List<int> columnInts, string message)
         {
             string rowStr = string.Join("", columnInts);
 

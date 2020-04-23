@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Backend.Models;
+﻿using Backend.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.DataAccess

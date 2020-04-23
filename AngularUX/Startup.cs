@@ -1,9 +1,6 @@
-using Backend.DataAccess;
-using Backend.Models;
 using Lamar;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
@@ -11,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AngularUX
 {
-    public class Startup
+	public class Startup
     {
         public Startup(IConfiguration configuration)
         {
