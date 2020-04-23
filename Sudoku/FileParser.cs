@@ -9,7 +9,7 @@ namespace Sudoku
     public class FileParser
     {
         public const string WRONG_ROW_LENGTH = "invalid row size";
-        public const string NON_NUMERIC = "row contains non-numeric chars";
+        public const string NON_NUMERIC = "row contains non-numeric chars or zeros";
         public const string FILE_TOO_LONG = "too many rows in file";
         public const string FILE_TOO_SHORT = "too few rows in file";
 
@@ -44,7 +44,8 @@ namespace Sudoku
 
             foreach (string l in lines)
             {
-                file.AddRow(ParseRow(l));
+                if (!string.IsNullOrWhiteSpace(l))
+                    file.AddRow(ParseRow(l));
             }
 
             return file;
@@ -52,7 +53,7 @@ namespace Sudoku
 
         public List<int> ParseRow(string row)
         {
-            char[] onlyNumbers = row.Where(c => char.IsDigit(c)).ToArray();
+            char[] onlyNumbers = row.Where(c => char.IsDigit(c) && int.Parse(c.ToString()) > 0).ToArray();
             char[] nowhitespace = row.Where(c => !char.IsWhiteSpace(c)).ToArray();
 
             if (new string(onlyNumbers) != new string(nowhitespace))
