@@ -7,3 +7,8 @@ To run website, change directory to ./AngularUX and run dotnet watch run from th
 
 ## Access Giphy API
 The javascript portion of the exercise can be executed by opening the ./giphy.htm file in your local browser.  Like the Angular exercise, this is bare bones "enter text; click button; see image" type of implementation.
+
+## Sudoku
+Simple .NET Core 3.1 executable that takes in a single command line arg and verifies if the file contains a valid Sudoku solution.  
+
+For example, after building, execute ".\Sudoku.exe C:\file\sudoku.txt".  Simply outputs "File 'C:\file\sudoku.txt' passes Suduko validation." or "File 'C:\file\sudoku.txt' is NOT valid: {reason}".  
