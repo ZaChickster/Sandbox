@@ -27,6 +27,24 @@ namespace Sudoku.Test
         }
 
         [Fact]
+        public void LoadFile_Should_Not_Load_Bad_Row_Too_Long()
+        {
+            _reader.Setup(r => r.ToList(TEST_FILENAME)).Returns(new List<string> { "", "", "", "", "", "", "", "", "", "" });
+            var ex = Assert.Throws<Exception>(() => _parser.LoadFile(TEST_FILENAME));
+
+            Assert.Equal(FileParser.FILE_TOO_LONG, ex.Message);
+        }
+
+        [Fact]
+        public void LoadFile_Should_Not_Load_Bad_Row_Non_Numeric()
+        {
+            _reader.Setup(r => r.ToList(TEST_FILENAME)).Returns(new List<string> { "", "", "", "", "", "", "" });
+            var ex = Assert.Throws<Exception>(() => _parser.LoadFile(TEST_FILENAME));
+
+            Assert.Equal(FileParser.FILE_TOO_SHORT, ex.Message);
+        }
+
+        [Fact]
         public void ParseRow_Should_Parse_Good_Row_Spaces()
         {
             List<int> read = _parser.ParseRow("4 1 7 3 6 9 8 2 5");
@@ -60,7 +78,7 @@ namespace Sudoku.Test
         }
 
         [Fact]
-        public void ParseRow_Should_Parse_Bad_Row_Too_Long()
+        public void ParseRow_Should_Not_Parse_Bad_Row_Too_Long()
         {
             var ex = Assert.Throws<Exception>(() => _parser.ParseRow("4 1 7 3 6 9 8 2 5 0 1"));
 
@@ -68,7 +86,7 @@ namespace Sudoku.Test
         }
 
         [Fact]
-        public void ParseRow_Should_Parse_Bad_Row_Non_Numeric()
+        public void ParseRow_Should_Not_Parse_Bad_Row_Non_Numeric()
         {
             var ex = Assert.Throws<Exception>(() => _parser.ParseRow("4 1 a 3 6 . 8 2 5"));
 

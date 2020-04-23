@@ -24,7 +24,7 @@ namespace Sudoku
         {
             var lines = _reader.ToList(filename);
 
-            if (lines == null && lines.Count < 9)
+            if (lines == null || lines.Count < 9)
             {
                 throw new Exception(FILE_TOO_SHORT);
             }
