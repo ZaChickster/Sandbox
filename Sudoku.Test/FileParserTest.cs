@@ -18,10 +18,26 @@ namespace Sudoku.Test
         }
 
         [Fact]
+        public void LoadFile_Should_Throw_Exception_Null_Filename()
+        {
+            var ex = Assert.Throws<Exception>(() => _parser.LoadFile(null));
+
+            Assert.Contains(FileParser.MISSING_FILENAME, ex.Message);
+        }
+
+        [Fact]
+        public void LoadFile_Should_Throw_Exception_Empty_Filename()
+        {
+            var ex = Assert.Throws<Exception>(() => _parser.LoadFile(new[] { "   " }));
+
+            Assert.Contains(FileParser.MISSING_FILENAME, ex.Message);
+        }
+
+        [Fact]
         public void LoadFile_Should_Load_Correct_Number_Of_Lines()
         {
             _reader.Setup(r => r.ToList(TEST_FILENAME)).Returns(new List<string> { "a", "a", "a", "a", "a", "a", "a", "a", "a" });
-            var lines = _parser.LoadFile(TEST_FILENAME);
+            var lines = _parser.LoadFile(new[] { TEST_FILENAME });
 
             Assert.Equal(9, lines.Count);
         }
@@ -30,7 +46,7 @@ namespace Sudoku.Test
         public void LoadFile_Should_Not_Load_Bad_Row_Too_Long()
         {
             _reader.Setup(r => r.ToList(TEST_FILENAME)).Returns(new List<string> { "a", "a", "a", "a", "a", "a", "a", "a", "a", "a" });
-            var ex = Assert.Throws<Exception>(() => _parser.LoadFile(TEST_FILENAME));
+            var ex = Assert.Throws<Exception>(() => _parser.LoadFile(new[] { TEST_FILENAME }));
 
             Assert.Equal(FileParser.FILE_TOO_LONG, ex.Message);
         }
@@ -39,7 +55,7 @@ namespace Sudoku.Test
         public void LoadFile_Should_Not_Load_Bad_Row_Non_Numeric()
         {
             _reader.Setup(r => r.ToList(TEST_FILENAME)).Returns(new List<string> { "a", "a", "a", "a", "a", "a", "a" });
-            var ex = Assert.Throws<Exception>(() => _parser.LoadFile(TEST_FILENAME));
+            var ex = Assert.Throws<Exception>(() => _parser.LoadFile(new[] { TEST_FILENAME }));
 
             Assert.Equal(FileParser.FILE_TOO_SHORT, ex.Message);
         }

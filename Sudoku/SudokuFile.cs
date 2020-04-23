@@ -8,13 +8,10 @@ namespace Sudoku
     {
         private List<List<int>> _rawData;
 
-        public string FileName { get; private set; }
+        public SudokuFile() : this(new List<List<int>>()) { }
 
-        public SudokuFile(string filename) : this(filename, new List<List<int>>()) { }
-
-        public SudokuFile(string filename, List<List<int>> data)
+        public SudokuFile(List<List<int>> data)
         {
-            FileName = filename;
             _rawData = data;
         }
 

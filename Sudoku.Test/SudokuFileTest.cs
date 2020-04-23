@@ -9,7 +9,7 @@ namespace Sudoku.Test
         [Fact]
         public void ValidateRow_Should_Validate_Correct_Row()
         {
-            SudokuFile file = new SudokuFile("blah", new List<List<int>>
+            SudokuFile file = new SudokuFile(new List<List<int>>
             {
                 new List<int>(),
                 new List<int> { 1,2,3,4,5,6,7,8,9 }
@@ -19,7 +19,7 @@ namespace Sudoku.Test
         [Fact]
         public void ValidateRow_Should_Blowup_Bad_Row()
         {
-            var ex = Assert.Throws<Exception>(() => new SudokuFile("blah", new List<List<int>>
+            var ex = Assert.Throws<Exception>(() => new SudokuFile(new List<List<int>>
             {
                 new List<int>(),
                 new List<int> { 1,2,3,4,5,5,7,8,9 }
@@ -29,7 +29,7 @@ namespace Sudoku.Test
         [Fact]
         public void ValidateColumn_Should_Validate_Correct_Column()
         {
-            SudokuFile file = new SudokuFile("blah", new List<List<int>>
+            SudokuFile file = new SudokuFile(new List<List<int>>
             {
                 new List<int> { 1,2,3,4,5,6,7,8,9 },
                 new List<int> { 1,2,3,4,4,6,7,8,9 },
@@ -46,7 +46,7 @@ namespace Sudoku.Test
         [Fact]
         public void ValidateColumn_Should_Blowup_Bad_Column()
         {
-            var ex = Assert.Throws<Exception>(() => new SudokuFile("blah", new List<List<int>>
+            var ex = Assert.Throws<Exception>(() => new SudokuFile(new List<List<int>>
             {
                 new List<int> { 1,2,3,4,5,6,7,8,9 },
                 new List<int> { 1,2,3,4,4,6,7,8,9 },
@@ -63,7 +63,7 @@ namespace Sudoku.Test
         [Fact]
         public void ValidateCube_Should_Validate_Correct_Cube()
         {
-            SudokuFile file = new SudokuFile("blah", new List<List<int>>
+            SudokuFile file = new SudokuFile(new List<List<int>>
             {
                 new List<int> { 1,2,3,4,5,6,7,8,9 },
                 new List<int> { 1,2,3,4,4,6,7,8,9 },
@@ -80,7 +80,7 @@ namespace Sudoku.Test
         [Fact]
         public void ValidateCube_Should_Blowup_Bad_Cube()
         {
-            var ex = Assert.Throws<Exception>(() => new SudokuFile("blah", new List<List<int>>
+            var ex = Assert.Throws<Exception>(() => new SudokuFile(new List<List<int>>
             {
                 new List<int> { 1,2,3,4,5,6,7,8,9 },
                 new List<int> { 1,2,3,4,4,6,7,8,9 },
@@ -97,7 +97,7 @@ namespace Sudoku.Test
         [Fact]
         public void Validate_Should_Validate_Correct_Cube()
         {
-            SudokuFile file = new SudokuFile("blah", new List<List<int>>
+            SudokuFile file = new SudokuFile(new List<List<int>>
             {
                 new List<int> { 4,1,7,3,6,9,8,2,5 },
                 new List<int> { 6,3,2,1,5,8,9,4,7 },
@@ -114,7 +114,7 @@ namespace Sudoku.Test
         [Fact]
         public void Validate_Should_Blowup_Bad_Cube()
         {
-            var ex = Assert.Throws<Exception>(() => new SudokuFile("blah", new List<List<int>>
+            var ex = Assert.Throws<Exception>(() => new SudokuFile(new List<List<int>>
             {
                 new List<int> { 4,1,7,3,6,9,8,2,5 },
                 new List<int> { 6,3,2,1,5,8,9,4,7 },
