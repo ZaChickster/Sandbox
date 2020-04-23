@@ -12,8 +12,8 @@ namespace Sudoku
 
     public class FileParser : IFileParser
     {
-        public const string BAD_ROW = "row does not contain non zero integers";
-        public const string MISSING_FILENAME = "missing filename";
+        public const string BAD_ROW = "row does not contain 9 non-zero integers";
+        public const string MISSING_FILENAME = "missing filename argument";
         public const string FILE_TOO_LONG = "too many rows in file";
         public const string FILE_TOO_SHORT = "too few rows in file";
 
