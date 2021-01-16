@@ -9,33 +9,42 @@ import { AppDataService } from '../utils/appdata.service';
 })
 export class CsvUploaderComponent implements OnInit {
   form: FormGroup;
-  error: string;
+  error: string = '';
   userId = 1;
   uploadResponse = { status: '', message: 0 };
 
-  constructor(private formBuilder: FormBuilder, private uploadService: AppDataService) { }
-
-  ngOnInit() {
+  constructor(private formBuilder: FormBuilder, private uploadService: AppDataService) { 
     this.form = this.formBuilder.group({
       csvFile: ['']
     });
   }
 
-  onFileChange(event) {
+  ngOnInit() {
+    
+  }
+
+  onFileChange(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.form.get('csvFile').setValue(file);
+      const input = this.form.get('csvFile');
+
+      if (input) {
+        input.setValue(file);
+      }      
     }
   }
 
   onSubmit() {
     const formData = new FormData();
-    formData.append('file', this.form.get('csvFile').value);
+    const input = this.form.get('csvFile');
+
+    if (input) {      
+      formData.append('file', input.value);
+    }  
 
     this.uploadService.upload(formData).subscribe(
       (res) => this.uploadResponse = res,
       (err) => this.error = err
     );
   }
-
 }

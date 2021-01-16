@@ -11,7 +11,7 @@ export class AppDataService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public upload(data) {
+  public upload(data: any) {
     const uploadURL = `/api/csv/upload`;
 
     return this.httpClient.post<any>(uploadURL, data, {
@@ -20,7 +20,12 @@ export class AppDataService {
     }).pipe(map((event) => {
       switch (event.type) {
         case HttpEventType.UploadProgress:
-          const progress = Math.round(100 * event.loaded / event.total);
+          let progress: number = 0;
+        
+          if (event.total) {
+            progress = Math.round(100 * event.loaded / event.total);
+          }
+        
           return { status: 'progress', message: progress };
         case HttpEventType.Response:
           return { status: 'finished', message: 100 };

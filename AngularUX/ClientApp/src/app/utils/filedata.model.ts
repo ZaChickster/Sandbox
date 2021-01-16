@@ -5,8 +5,8 @@ export class FileData {
     }
   }
 
-  uniqueId: number;
-  emailAddress: string;
-  firstName: string;
-  lastName: string;
+  uniqueId: number = 0;
+  emailAddress: string = '';
+  firstName: string = '';
+  lastName: string = '';
 }
