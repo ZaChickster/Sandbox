@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Backend.Models;
@@ -18,7 +19,15 @@ namespace Backend.DataAccess
 		public async Task<int> InsertData(IEnumerable<FileData> newdata, CancellationToken token)
 		{
 			await _db.Data.AddRangeAsync(newdata, token);
-			return await _db.SaveChangesAsync(true, token);
+			
+			try
+			{
+				return await _db.SaveChangesAsync(true, token);
+			}
+			catch(Exception e)
+			{
+				throw new Exception("Issue with SqlLite DB.  Did you copy {repo root}/Backend/sample.db to C:/data?", e);
+			}
 		}
 
 		public async Task<IEnumerable<FileData>> GetSampleData(CancellationToken token)
