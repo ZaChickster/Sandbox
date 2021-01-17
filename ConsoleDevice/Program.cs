@@ -1,23 +1,31 @@
 ﻿using MassTransit;
+using Messaging;
 using System;
+using System.Threading.Tasks;
 
 namespace ConsoleDevice
 {
-	class Program
+	public class Program
 	{
-		static void Main(string[] args)
+		public static async Task Main()
 		{
 			Console.WriteLine("Please Enter Device ID:");
 			string deviceID = Console.ReadLine();
 
-			var bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
+			var bus = Bus.Factory.CreateUsingRabbitMq(sbc =>
 			{
-				cfg.Host("localhost", "/", h =>
+				sbc.Host("rabbitmq://localhost");
+
+				sbc.ReceiveEndpoint("test_queue", ep =>
 				{
-					h.Username("localuser");
-					h.Password("localuser");
+					ep.Handler<IDeviceStatus>(context =>
+					{
+						return Console.Out.WriteLineAsync($"Device {context.Message.DeviceId} should now have status {context.Message.Status}.");
+					});
 				});
 			});
+
+			await bus.StartAsync(); // This is important!
 
 			Console.WriteLine($"DeviceID {deviceID} was entered.  Press any key to continue ...");
 			Console.ReadLine();

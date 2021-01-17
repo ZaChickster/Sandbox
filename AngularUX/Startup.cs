@@ -42,8 +42,6 @@ namespace WebUX
                 cfg.ExchangeType = ExchangeType.Direct;
             }));
 
-            services.AddSingleton<IPublishEndpoint>(provider => provider.GetRequiredService<IBusControl>());
-            services.AddSingleton<ISendEndpointProvider>(provider => provider.GetRequiredService<IBusControl>());
             services.AddSingleton<IBus>(provider => provider.GetRequiredService<IBusControl>());
             services.AddScoped<ICsvLogic, CsvLogic>();
             services.AddScoped<ISampleDataAccess, SampleDataAccess>();
