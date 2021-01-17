@@ -24,7 +24,7 @@ namespace AngularUX.Controllers
 
             try
             {
-                var endpoint = await _busControl.GetSendEndpoint(new Uri("queue:test_queue"));
+                var endpoint = await _busControl.GetSendEndpoint(new Uri($"queue:{string.Format(DeviceStatus.QUEUE_NAME_FORMAT, deviceId)}"));
 
                 await endpoint.Send<IDeviceStatus>(new DeviceStatus
                 {

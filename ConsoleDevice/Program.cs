@@ -10,13 +10,13 @@ namespace ConsoleDevice
 		public static async Task Main()
 		{
 			Console.WriteLine("Please Enter Device ID:");
-			string deviceID = Console.ReadLine();
+			string deviceId = Console.ReadLine();
 
 			var bus = Bus.Factory.CreateUsingRabbitMq(sbc =>
 			{
 				sbc.Host("rabbitmq://localhost");
 
-				sbc.ReceiveEndpoint("test_queue", ep =>
+				sbc.ReceiveEndpoint(string.Format(DeviceStatus.QUEUE_NAME_FORMAT, deviceId), ep =>
 				{
 					ep.Handler<IDeviceStatus>(context =>
 					{
@@ -27,7 +27,7 @@ namespace ConsoleDevice
 
 			await bus.StartAsync(); // This is important!
 
-			Console.WriteLine($"DeviceID {deviceID} was entered.  Press any key to continue ...");
+			Console.WriteLine($"DeviceID {deviceId} was entered.  Press any key to continue ...");
 			Console.ReadLine();
 		}
 	}
