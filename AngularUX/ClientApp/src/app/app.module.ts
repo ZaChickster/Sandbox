@@ -7,19 +7,22 @@ import { CsvUploaderComponent } from './csv-uploader/csv-uploader.component';
 import { CsvTableComponent } from './csv-table/csv-table.component';
 import { AppDataService } from './utils/appdata.service';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AssignDeviceComponent } from './assign-device/assign-device.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CsvUploaderComponent,
-    CsvTableComponent
+    CsvTableComponent,
+    AssignDeviceComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule
   ],
   providers: [AppDataService],
   bootstrap: [AppComponent]
