@@ -1,3 +1,6 @@
+using Backend.Core;
+using Backend.DataAccess;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,6 +8,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RabbitMQ.Client;
 
 namespace WebUX
 {
@@ -26,6 +30,25 @@ namespace WebUX
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+            {
+                cfg.Host("localhost", "/",
+                    h => {
+                        h.Username("localuser");
+                        h.Password("localuser");
+                    });
+
+                cfg.ExchangeType = ExchangeType.Direct;
+            }));
+
+            services.AddSingleton<IPublishEndpoint>(provider => provider.GetRequiredService<IBusControl>());
+            services.AddSingleton<ISendEndpointProvider>(provider => provider.GetRequiredService<IBusControl>());
+            services.AddSingleton<IBus>(provider => provider.GetRequiredService<IBusControl>());
+            services.AddScoped<ICsvLogic, CsvLogic>();
+            services.AddScoped<ISampleDataAccess, SampleDataAccess>();
+            services.AddScoped<ISampleDbContext, SampleDbContext>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
