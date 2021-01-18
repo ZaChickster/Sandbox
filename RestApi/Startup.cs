@@ -32,7 +32,8 @@ namespace Sandbox.RestApi
 				.AddScoped<ICsvLogic, CsvLogic>()
 				.AddScoped<ISampleDataAccess, SampleDataAccess>()
 				.AddScoped<ISampleDbContext, SampleDbContext>()
-				.AddScoped<ISampleDbContext, SampleDbContext>();
+				.AddScoped<ISampleDbContext, SampleDbContext>()
+				.AddScoped<IMongoDbDataAccess, MongoDbDataAccess>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
