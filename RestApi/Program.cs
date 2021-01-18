@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RestApi
+namespace Sandbox.RestApi
 {
 	public class Program
 	{

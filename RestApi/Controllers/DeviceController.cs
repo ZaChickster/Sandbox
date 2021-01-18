@@ -4,7 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sandbox.AngularUX.Controllers
+namespace Sandbox.RestApi.Controllers
 {
 	[Route("api/[controller]")]
 	public class DeviceController : Controller

@@ -5,7 +5,7 @@ using Backend.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Sandbox.AngularUX.Controllers
+namespace Sandbox.RestApi.Controllers
 {
 	[Route("api/[controller]")]
 	public class CsvController : Controller

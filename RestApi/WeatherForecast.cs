@@ -1,6 +1,6 @@
 using System;
 
-namespace RestApi
+namespace Sandbox.RestApi
 {
 	public class WeatherForecast
 	{

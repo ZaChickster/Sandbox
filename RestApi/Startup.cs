@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Sandbox.Backend.DataAccess;
 using Sandbox.Messaging;
 
-namespace RestApi
+namespace Sandbox.RestApi
 {
 	public class Startup
 	{

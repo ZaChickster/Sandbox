@@ -5,7 +5,7 @@ using System.Threading;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using Sandbox.Messaging;
-using Sandbox.AngularUX.Controllers;
+using Sandbox.RestApi.Controllers;
 
 namespace Sandbox.AngularUX.Test.Controllers
 {

@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleDevice", "ConsoleDev
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messaging", "Messaging\Messaging.csproj", "{8E0F4F9D-AECE-45A0-ACFD-AC8EE724A315}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApi.Test", "RestApi.Test\RestApi.Test.csproj", "{963C6930-36B6-492B-A08E-417873C0B3A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Test", "RestApi.Test\RestApi.Test.csproj", "{963C6930-36B6-492B-A08E-417873C0B3A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApi", "RestApi\RestApi.csproj", "{BAA259EE-FABF-4E42-A5A0-4A2FA21EA80A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi", "RestApi\RestApi.csproj", "{BAA259EE-FABF-4E42-A5A0-4A2FA21EA80A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
