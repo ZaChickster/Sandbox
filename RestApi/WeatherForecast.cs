@@ -1,6 +1,6 @@
 using System;
 
-namespace Sandbox.AngularUX
+namespace RestApi
 {
 	public class WeatherForecast
 	{

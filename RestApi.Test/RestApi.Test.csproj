@@ -5,7 +5,7 @@
 
     <IsPackable>false</IsPackable>
 
-    <RootNamespace>Sandbox.AngularUX.Test</RootNamespace>
+    <RootNamespace>Sandbox.RestApi.Test</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AngularUX\AngularUX.csproj" />
+    <ProjectReference Include="..\RestApi\RestApi.csproj" />
   </ItemGroup>
 
 </Project>

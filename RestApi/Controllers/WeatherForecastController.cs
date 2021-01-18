@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Sandbox.AngularUX;
+using System.Threading.Tasks;
 
-namespace Sandbox.AngularUX.Controllers
+namespace RestApi.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]

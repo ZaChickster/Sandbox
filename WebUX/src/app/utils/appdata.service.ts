@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpErrorResponse, HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FileData } from './filedata.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AppDataService {
   constructor(private httpClient: HttpClient) { }
 
   public upload(data: any) {
-    const uploadURL = `/api/csv/upload`;
+    const uploadURL = `${environment.apiRoot}/api/csv/upload`;
 
     return this.httpClient.post<any>(uploadURL, data, {
       reportProgress: true,
@@ -37,7 +38,7 @@ export class AppDataService {
   }
 
   public loadData(): Observable<FileData[]> {
-    const dataUrl = `/api/csv/table`;
+    const dataUrl = `${environment.apiRoot}/api/csv/table`;
 
     return this.httpClient.get<any[]>(dataUrl).pipe(map(result => {
       const converted: FileData[] = [];
@@ -51,7 +52,7 @@ export class AppDataService {
   }
 
   public assignDevice(deviceId: string) {
-    const assignUrl = `/api/device/${deviceId}/assign`;
+    const assignUrl = `${environment.apiRoot}/api/device/${deviceId}/assign`;
 
     return this.httpClient.post<any>(assignUrl, {}, {
       reportProgress: true,
