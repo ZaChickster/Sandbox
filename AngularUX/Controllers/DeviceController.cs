@@ -1,5 +1,4 @@
-﻿using MassTransit;
-using Messaging;
+﻿using Messaging;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading;
@@ -10,34 +9,25 @@ namespace AngularUX.Controllers
 	[Route("api/[controller]")]
 	public class DeviceController : Controller
 	{
-		private readonly IBusControl _busControl;
+		private readonly IRabbitMqAbstraction _rabbitMq;
 
-        public DeviceController(IBusControl endpoint)
+        public DeviceController(IRabbitMqAbstraction rabbit)
         {
-            _busControl = endpoint;
+            _rabbitMq = rabbit;
         }
 
         [HttpPost("{deviceId}/assign")]
         public async Task<IActionResult> Assign(string deviceId, CancellationToken token)
         {
-            await _busControl.StartAsync(token);
-
-            try
-            {
-                var endpoint = await _busControl.GetSendEndpoint(new Uri($"queue:{string.Format(DeviceStatus.QUEUE_NAME_FORMAT, deviceId)}"));
-
-                await endpoint.Send<IDeviceStatus>(new DeviceStatus
-                {
-                    DeviceId = deviceId,
-                    Status = "Assigned"
-                });
+			try
+			{
+                await _rabbitMq.SendAssignDeviceMsg(deviceId, token);
+                return Ok();
             }
-            finally
-            {
-                await _busControl.StopAsync();
-            }
-
-            return Ok();
+            catch(Exception e)
+			{
+                return BadRequest(e);
+			}
         }
     }
 }

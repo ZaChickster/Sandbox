@@ -1,6 +1,7 @@
 using Backend.Core;
 using Backend.DataAccess;
 using MassTransit;
+using Messaging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,22 +32,12 @@ namespace WebUX
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
-            {
-                cfg.Host("localhost", "/",
-                    h => {
-                        h.Username("localuser");
-                        h.Password("localuser");
-                    });
-
-                cfg.ExchangeType = ExchangeType.Direct;
-            }));
-
-            services.AddSingleton<IBus>(provider => provider.GetRequiredService<IBusControl>());
-            services.AddScoped<ICsvLogic, CsvLogic>();
-            services.AddScoped<ISampleDataAccess, SampleDataAccess>();
-            services.AddScoped<ISampleDbContext, SampleDbContext>();
-
+            services
+                .SetupRabbitMq()
+                .AddScoped<ICsvLogic, CsvLogic>()
+                .AddScoped<ISampleDataAccess, SampleDataAccess>()
+                .AddScoped<ISampleDbContext, SampleDbContext>()
+                .AddScoped<ISampleDbContext, SampleDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

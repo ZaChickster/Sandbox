@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AppDataService } from '../utils/appdata.service';
 
 import { AssignDeviceComponent } from './assign-device.component';
 
@@ -8,7 +10,9 @@ describe('AssignDeviceComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AssignDeviceComponent ]
+      declarations: [ AssignDeviceComponent ],
+      imports: [ HttpClientModule ],
+      providers: [ { } as AppDataService ]
     })
     .compileComponents();
   });
