@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Sandbox.RestApi.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("api/device")]
 	public class DeviceController : Controller
 	{
 		private readonly IRabbitMqAbstraction _rabbitMq;
@@ -21,7 +21,7 @@ namespace Sandbox.RestApi.Controllers
 			_mongoDb = mongo;
 		}
 
-		[HttpPost("{deviceId}/assign")]
+		[HttpGet("assign/{deviceId}")]
 		public async Task<IActionResult> Assign(string deviceId, CancellationToken token)
 		{
 			try
@@ -32,7 +32,25 @@ namespace Sandbox.RestApi.Controllers
 
 				await Task.WhenAll(tasks);
 
-				return Ok();
+				return Ok(1);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e);
+			}
+		}
+
+		[HttpGet("{deviceId}")]
+		public async Task<IActionResult> GetDevice(string deviceId)
+		{
+			try
+			{
+				Device d = await _mongoDb.GetDevice(deviceId);
+
+				if (d == null)
+					return NotFound();
+
+				return Ok(d);
 			}
 			catch (Exception e)
 			{

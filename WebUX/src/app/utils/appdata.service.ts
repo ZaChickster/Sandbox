@@ -52,27 +52,8 @@ export class AppDataService {
   }
 
   public assignDevice(deviceId: string) {
-    const assignUrl = `${environment.apiRoot}/api/device/${deviceId}/assign`;
+    const assignUrl = `${environment.apiRoot}/api/device/assign/${deviceId}`;
 
-    return this.httpClient.post<any>(assignUrl, {}, {
-      reportProgress: true,
-      observe: 'events'
-    }).pipe(map((event) => {
-      switch (event.type) {
-        case HttpEventType.UploadProgress:
-          let progress: number = 0;
-        
-          if (event.total) {
-            progress = Math.round(100 * event.loaded / event.total);
-          }
-        
-          return { status: 'progress', message: progress };
-        case HttpEventType.Response:
-          return { status: 'finished', message: 100 };
-        default:
-          return { status: `unknown: ${event.type}`, message: 0 };
-      }
-    })
-    );
+    return this.httpClient.get<any>(assignUrl);
   }
 }

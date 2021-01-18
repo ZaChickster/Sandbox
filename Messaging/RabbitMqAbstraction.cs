@@ -10,8 +10,10 @@ namespace Sandbox.Messaging
 		Task SendAssignDeviceMsg(string deviceId, CancellationToken token);
 	}
 
-	public class RabbitMqAbstraction
+	public class RabbitMqAbstraction : IRabbitMqAbstraction
 	{
+		public const string QUEUE_NAME_FORMAT = "device-{0}-q";
+
 		private readonly IBusControl _busControl;
 
 		public RabbitMqAbstraction(IBusControl endpoint)
@@ -21,22 +23,13 @@ namespace Sandbox.Messaging
 
 		public async Task SendAssignDeviceMsg(string deviceId, CancellationToken token)
 		{
-			try
-			{
-				await _busControl.StartAsync(token);
+			var endpoint = await _busControl.GetSendEndpoint(new Uri($"queue:{string.Format(QUEUE_NAME_FORMAT, deviceId)}"));
 
-				var endpoint = await _busControl.GetSendEndpoint(new Uri($"queue:{string.Format(DeviceStatus.QUEUE_NAME_FORMAT, deviceId)}"));
-
-				await endpoint.Send<IDeviceStatus>(new DeviceStatus
-				{
-					DeviceId = deviceId,
-					Status = "Assigned"
-				});
-			}
-			finally
+			await endpoint.Send<IDeviceStatus>(new DeviceStatus
 			{
-				await _busControl.StopAsync();
-			}
+				DeviceId = deviceId,
+				Status = "Assigned"
+			});
 		}
 
 	}

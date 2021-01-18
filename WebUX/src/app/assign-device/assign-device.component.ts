@@ -9,7 +9,6 @@ import { AppDataService } from '../utils/appdata.service';
 export class AssignDeviceComponent implements OnInit {
   deviceId: string = '';
   error: string = '';
-  uploadResponse = { status: '', message: 0 };
 
   constructor(private dataService: AppDataService) { }
 
@@ -17,9 +16,10 @@ export class AssignDeviceComponent implements OnInit {
   }
 
   assignDevice() {
+    this.error = '';
     this.dataService.assignDevice(this.deviceId).subscribe(
-      (res) => this.uploadResponse = res,
-      (err) => this.error = err
+      (res) => {},
+      (err) => this.error = err.message
     );
     this.deviceId = '';
   }

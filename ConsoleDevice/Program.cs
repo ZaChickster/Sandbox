@@ -16,7 +16,7 @@ namespace Sandbox.ConsoleDevice
 			{
 				sbc.Host("rabbitmq://localhost");
 
-				sbc.ReceiveEndpoint(string.Format(DeviceStatus.QUEUE_NAME_FORMAT, deviceId), ep =>
+				sbc.ReceiveEndpoint(string.Format(RabbitMqAbstraction.QUEUE_NAME_FORMAT, deviceId), ep =>
 				{
 					ep.Handler<IDeviceStatus>(context =>
 					{

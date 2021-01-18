@@ -18,9 +18,12 @@ namespace Sandbox.Messaging
 					});
 
 				cfg.ExchangeType = ExchangeType.Direct;
+
+				cfg.AutoStart = true;
 			}));
 
 			services.AddSingleton<IBus>(provider => provider.GetRequiredService<IBusControl>());
+			services.AddScoped<IRabbitMqAbstraction, RabbitMqAbstraction>();
 
 			return services;
 		}
