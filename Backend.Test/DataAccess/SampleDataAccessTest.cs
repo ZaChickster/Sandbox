@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Backend.DataAccess;
-using Backend.Models;
 using FluentAssertions;
+using Sandbox.Backend.DataAccess;
+using Sandbox.Backend.Models;
 using Xunit;
 
-namespace Backend.Test
+namespace Sandbox.Backend.Test.DataAccess
 {
 	public class SampleDataAccessTest
 	{

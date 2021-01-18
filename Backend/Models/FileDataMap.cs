@@ -1,6 +1,6 @@
 ﻿using CsvHelper.Configuration;
 
-namespace Backend.Models
+namespace Sandbox.Backend.Models
 {
 	public sealed class FileDataMap : ClassMap<FileData>
 	{

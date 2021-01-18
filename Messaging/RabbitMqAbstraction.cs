@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Messaging
+namespace Sandbox.Messaging
 {
 	public interface IRabbitMqAbstraction
 	{

@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Backend.Core;
-using Backend.Models;
 using FluentAssertions;
+using Sandbox.Backend.Models;
 using Xunit;
 
-namespace Backend.Test
+namespace Sandbox.Backend.Test.Core
 {
 	public class CsvLogicTest
 	{

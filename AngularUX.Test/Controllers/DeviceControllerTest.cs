@@ -1,13 +1,13 @@
-﻿using Messaging;
-using Moq;
-using AngularUX.Controllers;
+﻿using Moq;
 using System.Threading.Tasks;
 using Xunit;
 using System.Threading;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Sandbox.Messaging;
+using Sandbox.AngularUX.Controllers;
 
-namespace AngularUX.Test.Controllers
+namespace Sandbox.AngularUX.Test.Controllers
 {
 	public class DeviceControllerTest
 	{

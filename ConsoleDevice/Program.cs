@@ -1,9 +1,9 @@
 ﻿using MassTransit;
-using Messaging;
+using Sandbox.Messaging;
 using System;
 using System.Threading.Tasks;
 
-namespace ConsoleDevice
+namespace Sandbox.ConsoleDevice
 {
 	public class Program
 	{

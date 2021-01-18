@@ -4,13 +4,18 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Backend.DataAccess;
-using Backend.Models;
 using CsvHelper;
-using CsvHelper.Configuration;
+using Sandbox.Backend.DataAccess;
+using Sandbox.Backend.Models;
 
 namespace Backend.Core
 {
+	public interface ICsvLogic
+	{
+		Task<int> InsertCsvData(Stream file, CancellationToken token);
+		Task<IEnumerable<FileData>> GetData(CancellationToken token);
+	}
+
 	public class CsvLogic : ICsvLogic
 	{
 		private readonly ISampleDataAccess _data;

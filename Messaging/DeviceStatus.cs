@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Messaging
+﻿namespace Sandbox.Messaging
 {
 	public interface IDeviceStatus
 	{
