@@ -35,7 +35,7 @@ namespace Sandbox.AngularUX.Test.Controllers
 
 			var result = await _controller.Assign(deviceId, token);
 
-			Assert.True(result is OkResult);
+			Assert.True(result is OkObjectResult);
 		}
 
 		[Fact]
