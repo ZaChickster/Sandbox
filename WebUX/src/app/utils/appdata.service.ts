@@ -52,8 +52,8 @@ export class AppDataService {
   }
 
   public assignDevice(deviceId: string) {
-    const assignUrl = `${environment.apiRoot}/api/device/assign/${deviceId}`;
+    const assignUrl = `${environment.apiRoot}/api/device/${deviceId}/assign`;
 
-    return this.httpClient.get<any>(assignUrl);
+    return this.httpClient.get<any>(assignUrl, {});
   }
 }

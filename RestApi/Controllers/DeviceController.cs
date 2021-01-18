@@ -21,7 +21,7 @@ namespace Sandbox.RestApi.Controllers
 			_mongoDb = mongo;
 		}
 
-		[HttpGet("assign/{deviceId}")]
+		[HttpGet("{deviceId}/assign")]
 		public async Task<IActionResult> Assign(string deviceId, CancellationToken token)
 		{
 			try
