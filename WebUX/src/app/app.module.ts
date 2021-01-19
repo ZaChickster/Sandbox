@@ -9,13 +9,15 @@ import { AppDataService } from './utils/appdata.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AssignDeviceComponent } from './assign-device/assign-device.component';
+import { DeviceEventsComponent } from './device-events/device-events.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CsvUploaderComponent,
     CsvTableComponent,
-    AssignDeviceComponent
+    AssignDeviceComponent,
+    DeviceEventsComponent
   ],
   imports: [
     BrowserModule,

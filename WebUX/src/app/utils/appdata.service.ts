@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FileData } from './filedata.model';
 import { environment } from 'src/environments/environment';
+import { DataCollection } from './datacollection.model';
 
 @Injectable({
   providedIn: 'root'
@@ -55,5 +56,19 @@ export class AppDataService {
     const assignUrl = `${environment.apiRoot}/api/device/${deviceId}/assign`;
 
     return this.httpClient.get<any>(assignUrl, {});
+  }
+
+  public loadDeviceData(deviceId: string): Observable<DataCollection[]> {
+    const dataUrl = `${environment.apiRoot}/api/device/${deviceId}/datacollection`;
+
+    return this.httpClient.get<any[]>(dataUrl).pipe(map(result => {
+      const converted: DataCollection[] = [];
+
+      result.forEach((dto, idx, col) => {
+        converted.push(new DataCollection(dto));
+      });
+
+      return converted;
+    }));
   }
 }

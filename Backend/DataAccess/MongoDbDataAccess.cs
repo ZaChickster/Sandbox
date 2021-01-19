@@ -1,6 +1,7 @@
 ﻿using MongoDB.Driver;
 using Sandbox.Backend.Models;
 using Sandbox.Messaging;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sandbox.Backend.DataAccess
@@ -10,6 +11,7 @@ namespace Sandbox.Backend.DataAccess
 		Task InsertDevice(Device device);
 		Task<Device> GetDevice(string deviceId);
 		Task PersistStatus(DataCollection message);
+		Task<List<DataCollection>> GetDataForDevice(string deviceId);
 	}
 
 
@@ -40,6 +42,15 @@ namespace Sandbox.Backend.DataAccess
 		public async Task PersistStatus(DataCollection message)
 		{
 			await _mongoDb.GetCollection<DataCollection>("devicestatus").InsertOneAsync(message);
+		}
+
+		public async Task<List<DataCollection>> GetDataForDevice(string deviceId)
+		{
+			var result = await _mongoDb
+				.GetCollection<DataCollection>("devicestatus")
+				.FindAsync(d => d.DeviceId == deviceId);
+
+			return result.ToList();
 		}
 	}
 }

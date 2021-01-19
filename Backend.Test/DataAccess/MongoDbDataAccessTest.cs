@@ -1,5 +1,6 @@
 ﻿using Sandbox.Backend.DataAccess;
 using Sandbox.Backend.Models;
+using Sandbox.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,14 @@ namespace Sandbox.Backend.Test.DataAccess
 			Device pulled = await _mongoDb.GetDevice(device.Id);
 
 			Assert.Equal(device.Name, pulled.Name);
+		}
+
+		[Fact]
+		public async Task GetDataForDevice_Should_Get_List_From_Mongo()
+		{
+			List<DataCollection> pulled = await _mongoDb.GetDataForDevice("11111");
+
+			Assert.True(pulled.Count > 0);
 		}
 	}
 }

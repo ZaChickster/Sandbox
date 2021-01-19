@@ -9,6 +9,7 @@
 		<PackageReference Include="MassTransit" Version="7.1.2" />
 		<PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.1.2" />
 		<PackageReference Include="MassTransit.RabbitMQ" Version="7.1.2" />
+		<PackageReference Include="MongoDB.Bson" Version="2.11.5" />
 	</ItemGroup>	
 	
 </Project>

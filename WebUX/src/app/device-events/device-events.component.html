@@ -1,0 +1,21 @@
+<h2>Device Events</h2>
+<input [(ngModel)]='deviceId' /><button (click)='getEvents()'>Load</button>
+<br/>
+<div class="datacontainer">
+  <table>
+    <thead>
+      <tr>
+        <th>Unique ID</th>
+        <th>Device ID</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let model of allData">
+        <td>{{ model.id }}</td>
+        <td>{{ model.deviceId }}</td>
+        <td>{{ model.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

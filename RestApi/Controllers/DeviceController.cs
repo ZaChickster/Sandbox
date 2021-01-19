@@ -57,5 +57,25 @@ namespace Sandbox.RestApi.Controllers
 				return BadRequest(e);
 			}
 		}
+
+		[HttpGet("{deviceId}/datacollection")]
+		public async Task<IActionResult> GetCollectedData(string deviceId)
+		{
+			try
+			{
+				Device d = await _mongoDb.GetDevice(deviceId);
+
+				if (d == null)
+					return NotFound();
+
+				List<DataCollection> data = await _mongoDb.GetDataForDevice(deviceId);
+
+				return Ok(data);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e);
+			}
+		}
 	}
 }
