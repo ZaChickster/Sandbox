@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sandbox.Backend.DataAccess;
 using Sandbox.Messaging;
+using Sandbox.RestApi.Consumer;
 
 namespace Sandbox.RestApi
 {
@@ -28,7 +29,7 @@ namespace Sandbox.RestApi
 				options.AddDefaultPolicy(builder => { builder.WithOrigins("http://localhost:4200", "https://localhost:4200"); });
 			});
 
-			services.SetupRabbitMq()
+			services.SetupRabbitMq<DataCollectionConsumer>()
 				.AddScoped<ICsvLogic, CsvLogic>()
 				.AddScoped<ISampleDataAccess, SampleDataAccess>()
 				.AddScoped<ISampleDbContext, SampleDbContext>()

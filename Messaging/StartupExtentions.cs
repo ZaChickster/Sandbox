@@ -6,21 +6,26 @@ namespace Sandbox.Messaging
 {
 	public static class StartupExtentions
 	{
-		public static IServiceCollection SetupRabbitMq(this IServiceCollection services)
+		public static IServiceCollection SetupRabbitMq<T>(this IServiceCollection services) where T : class, IConsumer<DataCollection>, new()
 		{
-			services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+			var bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
 			{
-				cfg.Host("localhost", "/",
-					h =>
-					{
-						h.Username("localuser");
-						h.Password("localuser");
-					});
+				cfg.Host("localhost", "/", h =>
+				{
+					h.Username("localuser");
+					h.Password("localuser");
+				});
+
+				cfg.ReceiveEndpoint("device-data-collection", e =>
+				{
+					e.Consumer<T>();
+				});
 
 				cfg.ExchangeType = ExchangeType.Direct;
+			});
+			bus.Start();
 
-				cfg.AutoStart = true;
-			}));
+			services.AddSingleton(provider => bus);
 
 			services.AddSingleton<IBus>(provider => provider.GetRequiredService<IBusControl>());
 			services.AddScoped<IRabbitMqAbstraction, RabbitMqAbstraction>();

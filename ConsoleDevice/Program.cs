@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using Sandbox.Messaging;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sandbox.ConsoleDevice
@@ -27,8 +28,31 @@ namespace Sandbox.ConsoleDevice
 
 			await bus.StartAsync(); // This is important!
 
-			Console.WriteLine($"DeviceID {deviceId} was entered.  Press any key to continue ...");
-			Console.ReadLine();
+			var endpoint = await bus.GetSendEndpoint(new Uri($"queue:device-data-collection"));
+			var random = new Random();
+
+			while(true)
+			{
+				int seed = random.Next(1, 12);
+				string status = "";
+
+				switch(seed % 3)
+				{
+					case 0:
+						status = "Awake";
+						break;
+					case 1:
+						status = "Sleeping";
+						break;
+					case 2:
+						status = "Running";
+						break;
+				}
+
+				await endpoint.Send(new DataCollection { DeviceId = deviceId, Status = status });
+				Console.WriteLine("status sent");
+				Thread.Sleep(2500);
+			}
 		}
 	}
 }
