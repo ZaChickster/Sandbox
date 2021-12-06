@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { of } from 'rxjs';
+import { catchError, take, tap } from 'rxjs/operators';
 import { AppDataService } from '../utils/appdata.service';
 
 @Component({
@@ -17,10 +19,17 @@ export class AssignDeviceComponent implements OnInit {
 
   assignDevice() {
     this.error = '';
-    this.dataService.assignDevice(this.deviceId).subscribe(
-      (res) => {},
-      (err) => this.error = err.message
-    );
-    this.deviceId = '';
+    this.dataService.assignDevice(this.deviceId)
+      .pipe(
+        take(1),
+        tap(res => {
+          this.deviceId = '';
+        }),
+        catchError(error => {
+          console.error(error);
+          return of(error);
+        })
+      ).subscribe();
+    
   }
 }

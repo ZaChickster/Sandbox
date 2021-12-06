@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FileData } from '../utils/filedata.model';
 import { AppDataService } from '../utils/appdata.service';
+import { catchError, switchMap, take, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-csv-table',
@@ -13,13 +15,16 @@ export class CsvTableComponent implements OnInit {
   constructor(private dataService: AppDataService) { }
 
   ngOnInit() {
-    this.dataService.loadData().subscribe(data => {
-      if (data) {
+    this.dataService.loadData()
+    .pipe(
+      take(1),
+      tap(data => {
         this.allData = data;
-      } else {
-        this.allData = [];
-      }
-    });
+      }),
+      catchError(error => {
+        console.error(error);
+        return of(error);
+      })
+    ).subscribe();
   }
-
 }

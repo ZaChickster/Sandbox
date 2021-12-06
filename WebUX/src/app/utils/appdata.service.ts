@@ -52,7 +52,7 @@ export class AppDataService {
     }));
   }
 
-  public assignDevice(deviceId: string) {
+  public assignDevice(deviceId: string): Observable<any> {
     const assignUrl = `${environment.apiRoot}/api/device/${deviceId}/assign`;
 
     return this.httpClient.get<any>(assignUrl, {});

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { of } from 'rxjs';
+import { catchError, take, tap } from 'rxjs/operators';
 import { AppDataService } from '../utils/appdata.service';
 import { DataCollection } from '../utils/datacollection.model';
 
@@ -18,13 +20,22 @@ export class DeviceEventsComponent implements OnInit {
   }
 
   getEvents() {
-    this.dataService.loadDeviceData(this.deviceId).subscribe(data => {
-      if (data) {
-        this.allData = data;
-      } else {
-        this.allData = [];
-      }
-      this.deviceId = '';
-    });
+    this.dataService.loadDeviceData(this.deviceId)
+      .pipe(
+        take(1),
+        tap(data => {
+          if (data) {
+            this.allData = data;
+          } else {
+            this.allData = [];
+          }
+          this.deviceId = '';
+        }),
+        catchError(error => {
+          console.error(error);
+          return of(error);
+        })
+      )
+      .subscribe();
   }
 }
