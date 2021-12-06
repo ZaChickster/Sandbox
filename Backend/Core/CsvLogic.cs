@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CsvHelper;
+using CsvHelper.Configuration;
 using Sandbox.Backend.DataAccess;
 using Sandbox.Backend.Models;
 
@@ -36,11 +37,15 @@ namespace Backend.Core
 
 		public IEnumerable<FileData> ReadFile(Stream file)
 		{
-			using (StreamReader reader = new StreamReader(file))
-			using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+			var config = new CsvConfiguration(CultureInfo.InvariantCulture)
 			{
-				csv.Configuration.RegisterClassMap<FileDataMap>();
-				csv.Configuration.HasHeaderRecord = true;
+				HasHeaderRecord = true
+			};
+
+			using (StreamReader reader = new StreamReader(file))
+			using (var csv = new CsvReader(reader, config))
+			{
+				csv.Context.RegisterClassMap<FileDataMap>();
 				return csv.GetRecords<FileData>().ToList();
 			}
 		}
