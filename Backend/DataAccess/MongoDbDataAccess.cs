@@ -23,7 +23,7 @@ namespace Sandbox.Backend.DataAccess
 		{
 			IMongoClient client = new MongoClient("mongodb://localhost:27017");
 			_mongoDb = client.GetDatabase("ams");
-		}
+        }
 
 		public async Task InsertDevice(Device device)
 		{

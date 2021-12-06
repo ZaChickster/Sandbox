@@ -1,6 +1,7 @@
 using Backend.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -64,6 +65,10 @@ namespace Sandbox.RestApi
 				endpoints.MapHub<BasicHub>("/trigger");
 				endpoints.MapControllers();
 			});
+
+			SharedHubContext = app.ApplicationServices.GetService<IHubContext<BasicHub>>();
 		}
+
+        public static IHubContext<BasicHub> SharedHubContext { get; set; }
 	}
 }

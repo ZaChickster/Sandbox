@@ -14,12 +14,10 @@ namespace Sandbox.RestApi.Consumer
 	public class DataCollectionConsumer : IDataCollectionConsumer
 	{
 		private readonly IMongoDbDataAccess _mongoDb;
-		private readonly IServiceProvider _provider;
 
-		public DataCollectionConsumer(IMongoDbDataAccess mongo, IServiceProvider sp) 
+		public DataCollectionConsumer(IMongoDbDataAccess mongo) 
 		{ 
 			_mongoDb = mongo;
-			_provider = sp;
 		}
 
 		public async Task Consume(ConsumeContext<DataCollection> context)
@@ -28,8 +26,11 @@ namespace Sandbox.RestApi.Consumer
 
 			await _mongoDb.PersistStatus(context.Message);
 
-            IHubContext<BasicHub> hub = _provider.GetService<IHubContext<BasicHub>>();
-			await hub.Clients.All.SendAsync("messageRecieved", new { status = context.Message.Status, deviceId = context.Message.DeviceId });
+            if (Startup.SharedHubContext != null)
+            {
+                await Startup.SharedHubContext.Clients.All.SendAsync("messageRecieved", new { status = context.Message.Status, deviceId = context.Message.DeviceId });
+			}
+			
 		}
 	}
 }
