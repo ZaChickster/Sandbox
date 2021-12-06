@@ -19,7 +19,8 @@ namespace Sandbox.Messaging
 
 				cfg.ReceiveEndpoint("device-data-collection", e =>
 				{
-					var sp = services.BuildServiceProvider();
+					services.AddScoped<IDataCollectionConsumer, DataCollectionConsumer>();
+					var sp = services.BuildServiceProvider();					
 					e.Consumer(() => sp.GetService<IDataCollectionConsumer>());
 				});
 

@@ -12,7 +12,7 @@ import * as signalR from '@microsoft/signalr';
   styleUrls: ['./device-events.component.scss']
 })
 export class DeviceEventsComponent implements OnInit, OnDestroy {
-  deviceId : string = '';
+  deviceId : number = 0;
   allData : DataCollection[] = []
   connection: signalR.HubConnection | undefined;
 
@@ -25,7 +25,7 @@ export class DeviceEventsComponent implements OnInit, OnDestroy {
       .build();
 
     this.connection.on("messageRecieved", (data) => {  
-      this.getEvents();  
+      this.getEvents(data.deviceId);  
     });  
 
     this.connection.start().then(function () {  
@@ -39,8 +39,8 @@ export class DeviceEventsComponent implements OnInit, OnDestroy {
     this.connection?.stop();
   }
 
-  getEvents() {
-    this.dataService.loadDeviceData(this.deviceId)
+  getEvents(deviceId?: number) {
+    this.dataService.loadDeviceData(deviceId ?? this.deviceId)
       .pipe(
         take(1),
         tap(data => {
@@ -49,7 +49,7 @@ export class DeviceEventsComponent implements OnInit, OnDestroy {
           } else {
             this.allData = [];
           }
-          this.deviceId = '';
+          this.deviceId = 0;
         }),
         catchError(error => {
           console.error(error);
