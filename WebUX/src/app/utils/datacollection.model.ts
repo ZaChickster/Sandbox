@@ -8,4 +8,5 @@ export class DataCollection {
   id: string = '';
   deviceId: string = '';
   status: string = '';
+  when: Date = new Date()
 }

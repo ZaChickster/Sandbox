@@ -49,7 +49,7 @@ namespace Sandbox.ConsoleDevice
 						break;
 				}
 
-				await endpoint.Send(new DataCollection { DeviceId = deviceId, Status = status });
+				await endpoint.Send(new DataCollection { DeviceId = deviceId, Status = status, When = DateTime.UtcNow });
 				Console.WriteLine($"status {status} sent");
 				Thread.Sleep(10000);
 			}

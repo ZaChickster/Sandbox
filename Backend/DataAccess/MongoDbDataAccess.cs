@@ -48,9 +48,12 @@ namespace Sandbox.Backend.DataAccess
 		{
 			var result = await _mongoDb
 				.GetCollection<DataCollection>("devicestatus")
-				.FindAsync(d => d.DeviceId == deviceId);
+				.Find(d => d.DeviceId == deviceId)
+				.Limit(20)
+				.SortByDescending(dc => dc.When)
+				.ToListAsync();
 
-			return result.ToList();
+			return result;
 		}
 	}
 }

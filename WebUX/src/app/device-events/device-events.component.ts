@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
 import { AppDataService } from '../utils/appdata.service';
@@ -16,7 +16,7 @@ export class DeviceEventsComponent implements OnInit, OnDestroy {
   allData : DataCollection[] = []
   connection: signalR.HubConnection | undefined;
 
-  constructor(private dataService: AppDataService) { }
+  constructor(private dataService: AppDataService, private changeDetectorRef: ChangeDetectorRef) { }
   
   ngOnInit(): void {
     this.connection = new signalR.HubConnectionBuilder()  
@@ -45,11 +45,13 @@ export class DeviceEventsComponent implements OnInit, OnDestroy {
         take(1),
         tap(data => {
           if (data) {
-            this.allData = data;
+            this.allData = []
+            this.allData = this.allData.concat(data);
           } else {
             this.allData = [];
           }
-          this.deviceId = 0;
+          this.deviceId = deviceId ?? this.deviceId;
+          this.changeDetectorRef.detectChanges();
         }),
         catchError(error => {
           console.error(error);

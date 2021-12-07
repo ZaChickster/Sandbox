@@ -25,10 +25,11 @@ namespace Sandbox.Messaging
 		{
 			var endpoint = await _busControl.GetSendEndpoint(new Uri($"queue:{string.Format(QUEUE_NAME_FORMAT, deviceId)}"));
 
-			await endpoint.Send<IDeviceStatus>(new DeviceStatus
+			await endpoint.Send<IDeviceStatus>(new DataCollection
 			{
 				DeviceId = deviceId,
-				Status = "Assigned"
+				Status = "Assigned",
+				When = DateTime.UtcNow
 			});
 		}
 

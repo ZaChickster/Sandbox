@@ -5,14 +5,14 @@
   <table>
     <thead>
       <tr>
-        <th>Unique ID</th>
+        <th>Event Time (UTC)</th>
         <th>Device ID</th>
         <th>Status</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let model of allData">
-        <td>{{ model.id }}</td>
+        <td>{{ model.when | date:'medium' }}</td>
         <td>{{ model.deviceId }}</td>
         <td>{{ model.status }}</td>
       </tr>
