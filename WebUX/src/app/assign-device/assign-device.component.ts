@@ -9,8 +9,11 @@ import { AppDataService } from '../utils/appdata.service';
   styleUrls: ['./assign-device.component.scss']
 })
 export class AssignDeviceComponent implements OnInit {
-  deviceId: string = '';
-  message: string = ''
+  assignDeviceId?: number = undefined;
+  messageDeviceId?: number = undefined;
+  assignMessage: string = '';
+  messageMessage: string = '';
+  toSend: string = '';
 
   constructor(private dataService: AppDataService) { }
 
@@ -18,20 +21,46 @@ export class AssignDeviceComponent implements OnInit {
   }
 
   assignDevice() {
-    this.message = '';
-    this.dataService.assignDevice(this.deviceId)
+    const device = this.assignDeviceId || 0;
+
+    if (device == 0)
+      return;
+    
+    this.assignMessage = '';    
+    this.dataService.assignDevice(device)
       .pipe(
         take(1),
         tap(res => {
-          this.message = `Device ${this.deviceId} has been registered.`;
-          this.deviceId = '';          
+          this.assignMessage = `Device ${this.assignDeviceId} has been registered.`;
+          this.assignDeviceId = undefined;          
         }),
         catchError(error => {
           console.error(error);
-          this.message = JSON.stringify(error);
+          this.assignMessage = JSON.stringify(error);
           return of(error);
         })
-      ).subscribe();
-    
+      ).subscribe();    
+  }
+
+  sendMessage() {
+    const device = this.messageDeviceId || 0;
+
+    if (device == 0)
+      return;
+
+    this.messageMessage = '';
+    this.dataService.messageDevice(device, this.toSend)
+      .pipe(
+        take(1),
+        tap(res => {
+          this.messageMessage = `Message sent to ${this.messageDeviceId}.`;
+          this.messageDeviceId = undefined;          
+        }),
+        catchError(error => {
+          console.error(error);
+          this.messageMessage = JSON.stringify(error);
+          return of(error);
+        })
+      ).subscribe();    
   }
 }

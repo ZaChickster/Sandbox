@@ -12,7 +12,7 @@ import * as signalR from '@microsoft/signalr';
   styleUrls: ['./device-events.component.scss']
 })
 export class DeviceEventsComponent implements OnInit, OnDestroy {
-  desiredRows : number = 20;
+  desiredRows : number = 10;
   allData : DataCollection[] = [];
   connection: signalR.HubConnection | undefined;
   displayedColumns: string[] = [ 'when', 'device-id', 'status' ];

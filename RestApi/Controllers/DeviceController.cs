@@ -40,6 +40,21 @@ namespace Sandbox.RestApi.Controllers
 			}
 		}
 
+		[HttpGet("{deviceId}/sendmessage")]
+		public async Task<IActionResult> Message(string deviceId, [FromQuery] string message, CancellationToken token)
+		{
+			try
+			{
+				await _rabbitMq.SendDeviceMessage(deviceId, message, token);
+
+				return Ok(1);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e);
+			}
+		}
+
 		[HttpGet("{deviceId}")]
 		public async Task<IActionResult> GetDevice(string deviceId)
 		{
