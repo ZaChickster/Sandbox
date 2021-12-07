@@ -24,13 +24,13 @@ export class DeviceEventsComponent implements OnInit, OnDestroy {
       .withUrl(environment.apiRoot + '/trigger')  
       .build();
 
-    this.connection.on("messageRecieved", (data) => {  
-      this.getEvents();  
+    this.connection.on("messageRecieved", (data: { deviceId: number | undefined; }) => {  
+      this.getEvents(data.deviceId);  
     });  
 
     this.connection.start().then(function () {  
         console.log('SignalR Connected!');  
-      }).catch(function (err) {  
+      }).catch(function (err: { toString: () => any; }) {  
         return console.error(err.toString());  
       });
   }
