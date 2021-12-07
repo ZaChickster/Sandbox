@@ -58,8 +58,8 @@ export class AppDataService {
     return this.httpClient.get<any>(assignUrl, {});
   }
 
-  public loadDeviceData(deviceId: number): Observable<DataCollection[]> {
-    const dataUrl = `${environment.apiRoot}/api/device/${deviceId}/datacollection`;
+  public loadDeviceData(desiredRows: number): Observable<DataCollection[]> {
+    const dataUrl = `${environment.apiRoot}/api/device/${desiredRows}/datacollection`;
 
     return this.httpClient.get<any[]>(dataUrl).pipe(map(result => {
       const converted: DataCollection[] = [];

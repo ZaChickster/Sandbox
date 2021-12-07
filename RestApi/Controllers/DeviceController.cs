@@ -58,17 +58,12 @@ namespace Sandbox.RestApi.Controllers
 			}
 		}
 
-		[HttpGet("{deviceId}/datacollection")]
-		public async Task<IActionResult> GetCollectedData(string deviceId)
+		[HttpGet("{rowsToReturn}/datacollection")]
+		public async Task<IActionResult> GetCollectedData(int rowsToReturn)
 		{
 			try
 			{
-				Device d = await _mongoDb.GetDevice(deviceId);
-
-				if (d == null)
-					return NotFound();
-
-				List<DataCollection> data = await _mongoDb.GetDataForDevice(deviceId);
+				List<DataCollection> data = await _mongoDb.GetData(rowsToReturn);
 
 				return Ok(data);
 			}
