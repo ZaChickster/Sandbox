@@ -18,13 +18,13 @@
     <mat-form-field appearance="outline">
       <mat-label>Device Id</mat-label>
       <input matInput placeholder="Device Id" [(ngModel)]='messageDeviceId'>
-      <mat-icon matSuffix>add_circle_outline</mat-icon>
+      <mat-icon matSuffix>important_devices</mat-icon>
       <mat-hint>What device to message?</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Message</mat-label>
       <input matInput placeholder="Message" [(ngModel)]='toSend'>
-      <mat-icon matSuffix>add_circle_outline</mat-icon>
+      <mat-icon matSuffix>message</mat-icon>
       <mat-hint>What message do you want to send?</mat-hint>
     </mat-form-field>
     <button mat-raised-button color="primary" (click)='sendMessage()'>Send Message</button>
