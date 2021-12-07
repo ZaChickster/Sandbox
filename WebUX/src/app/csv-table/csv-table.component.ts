@@ -12,6 +12,8 @@ import { of } from 'rxjs';
 export class CsvTableComponent implements OnInit {
   allData: FileData[] = [];
 
+  displayedColumns: string[] = ['unique-id', 'email-address', 'first-name', 'last-name'];
+
   constructor(private dataService: AppDataService) { }
 
   ngOnInit() {

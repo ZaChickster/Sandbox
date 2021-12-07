@@ -13,8 +13,9 @@ import * as signalR from '@microsoft/signalr';
 })
 export class DeviceEventsComponent implements OnInit, OnDestroy {
   desiredRows : number = 20;
-  allData : DataCollection[] = []
+  allData : DataCollection[] = [];
   connection: signalR.HubConnection | undefined;
+  displayedColumns: string[] = [ 'when', 'device-id', 'status' ];
 
   constructor(private dataService: AppDataService, private changeDetectorRef: ChangeDetectorRef) { }
   

@@ -10,7 +10,7 @@ import { AppDataService } from '../utils/appdata.service';
 })
 export class AssignDeviceComponent implements OnInit {
   deviceId: string = '';
-  error: string = '';
+  message: string = ''
 
   constructor(private dataService: AppDataService) { }
 
@@ -18,15 +18,17 @@ export class AssignDeviceComponent implements OnInit {
   }
 
   assignDevice() {
-    this.error = '';
+    this.message = '';
     this.dataService.assignDevice(this.deviceId)
       .pipe(
         take(1),
         tap(res => {
-          this.deviceId = '';
+          this.message = `Device ${this.deviceId} has been registered.`;
+          this.deviceId = '';          
         }),
         catchError(error => {
           console.error(error);
+          this.message = JSON.stringify(error);
           return of(error);
         })
       ).subscribe();

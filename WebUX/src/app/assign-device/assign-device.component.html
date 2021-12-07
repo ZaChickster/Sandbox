@@ -1,3 +1,13 @@
-<input [(ngModel)]='deviceId' /><button (click)='assignDevice()'>Assign</button>
-<br/>
-<span class='error'>{{error}}</span>
+<h2>Register New Device</h2>
+
+<div class="wrapper">
+    <mat-form-field appearance="outline">
+        <mat-label>New Device Id</mat-label>
+        <input matInput placeholder="New Device Id" [(ngModel)]='deviceId'>
+        <mat-icon matSuffix>add_circle_outline</mat-icon>
+        <mat-hint>Provide the id of the new device.</mat-hint>
+      </mat-form-field>
+    <button mat-raised-button color="primary" (click)='assignDevice()'>Register Device</button>
+    <br/>
+    <span>{{message}}</span>
+</div>
