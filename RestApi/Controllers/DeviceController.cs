@@ -36,7 +36,7 @@ namespace Sandbox.RestApi.Controllers
 			}
 			catch (Exception e)
 			{
-				return BadRequest(e);
+				return BadRequest(new { e.Message, e.StackTrace });
 			}
 		}
 
@@ -45,13 +45,18 @@ namespace Sandbox.RestApi.Controllers
 		{
 			try
 			{
+				Device d = await _mongoDb.GetDevice(deviceId);
+
+				if (d == null)
+					return NotFound(new { Message = "device not found" });
+
 				await _rabbitMq.SendDeviceMessage(deviceId, message, token);
 
 				return Ok(1);
 			}
 			catch (Exception e)
 			{
-				return BadRequest(e);
+				return BadRequest(new { e.Message, e.StackTrace });
 			}
 		}
 
@@ -63,13 +68,13 @@ namespace Sandbox.RestApi.Controllers
 				Device d = await _mongoDb.GetDevice(deviceId);
 
 				if (d == null)
-					return NotFound();
+					return NotFound(new { Message = "device not found" });
 
 				return Ok(d);
 			}
 			catch (Exception e)
 			{
-				return BadRequest(e);
+				return BadRequest(new { e.Message, e.StackTrace });
 			}
 		}
 
@@ -84,7 +89,7 @@ namespace Sandbox.RestApi.Controllers
 			}
 			catch (Exception e)
 			{
-				return BadRequest(e);
+				return BadRequest(new { e.Message, e.StackTrace });
 			}
 		}
 	}
