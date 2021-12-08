@@ -26,7 +26,7 @@ export class DeviceEventsComponent implements OnInit, OnDestroy {
       .build();
 
     this.connection.on("messageRecieved", (data: { deviceId: number | undefined; }) => {  
-      this.getEvents(data.deviceId);  
+      this.getEvents();  
     });  
 
     this.connection.start().then(function () {  
@@ -40,7 +40,7 @@ export class DeviceEventsComponent implements OnInit, OnDestroy {
     this.connection?.stop();
   }
 
-  getEvents(deviceId?: number) {
+  getEvents() {
     this.dataService.loadDeviceData(this.desiredRows)
       .pipe(
         take(1),
