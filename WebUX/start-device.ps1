@@ -1,0 +1,1 @@
+﻿../ConsoleDevice/bin/Debug/net5.0/ConsoleDevice.exe

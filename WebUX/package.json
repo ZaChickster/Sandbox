@@ -7,7 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "consoledevice": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./start-device.ps1",
+    "startmongodb": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./start-mongodb.ps1"
   },
   "private": true,
   "dependencies": {
