@@ -34,9 +34,9 @@ namespace Sandbox.Backend.Test.DataAccess
 		[Fact]
 		public async Task GetDataForDevice_Should_Get_List_From_Mongo()
 		{
-			List<DataCollection> pulled = await _mongoDb.GetDataForDevice("11111");
+			List<DataCollection> pulled = await _mongoDb.GetData(25);
 
-			Assert.True(pulled.Count > 0);
+			Assert.True(pulled.Count == 25);
 		}
 	}
 }

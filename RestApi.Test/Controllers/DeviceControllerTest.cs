@@ -67,5 +67,49 @@ namespace Sandbox.AngularUX.Test.Controllers
 
 			Assert.True(result is BadRequestObjectResult);
 		}
+
+		[Fact]
+		public async Task Message_Should_Return_Ok_When_Tasks_Complete_Normally()
+		{
+			string deviceId = "testDeviceId";
+			CancellationToken token = new CancellationToken();
+
+			_rabbitMock.Setup(r => r.SendAssignDeviceMsg(deviceId, token)).Returns(Task.CompletedTask);
+			_mongoMock.Setup(m => m.GetDevice(deviceId)).ReturnsAsync(new Device { Id = deviceId});
+
+			var result = await _controller.Message(deviceId, "sent message", token);
+
+			Assert.True(result is OkObjectResult);
+		}
+
+		[Fact]
+		public async Task Message_Should_Return_BadRequest_When_Send_Message_Errors()
+		{
+			string deviceId = "testDeviceId";
+			string sentMessage = "sent message";
+			CancellationToken token = new CancellationToken();
+			Exception boom = new Exception("boom");
+
+			_rabbitMock.Setup(r => r.SendDeviceMessage(deviceId, sentMessage, token)).ThrowsAsync(boom);
+			_mongoMock.Setup(m => m.GetDevice(deviceId)).ReturnsAsync(new Device { Id = deviceId });
+
+			var result = await _controller.Message(deviceId, sentMessage, token);
+
+			Assert.True(result is BadRequestObjectResult);
+		}
+
+		[Fact]
+		public async Task Message_Should_Return_NotFound_When_Message_Errors()
+		{
+			string deviceId = "testDeviceId";
+			CancellationToken token = new CancellationToken();
+			Device device = null;
+
+			_mongoMock.Setup(m => m.GetDevice(deviceId)).ReturnsAsync(device);
+
+			var result = await _controller.Message(deviceId, "sent message", token);
+
+			Assert.True(result is NotFoundObjectResult);
+		}
 	}
 }

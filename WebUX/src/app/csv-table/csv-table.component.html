@@ -1,21 +1,30 @@
-<h2>Database Contents</h2>
-<div class="datacontainer">
-  <table>
-    <thead>
-      <tr>
-        <th>Unique ID</th>
-        <th>Email Address</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let model of allData">
-        <td>{{ model.uniqueId }}</td>
-        <td>{{ model.emailAddress }}</td>
-        <td>{{ model.firstName }}</td>
-        <td>{{ model.lastName }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<h2>Uploaded Email Addresses</h2>
+
+<table mat-table [dataSource]="allData" class="mat-elevation-z8 demo-table">
+  <!-- Position Column -->
+  <ng-container matColumnDef="unique-id">
+    <th mat-header-cell *matHeaderCellDef> Id </th>
+    <td mat-cell *matCellDef="let element"> {{element.uniqueId}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="email-address">
+    <th mat-header-cell *matHeaderCellDef> Email </th>
+    <td mat-cell *matCellDef="let element"> {{element.emailAddress}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="first-name">
+    <th mat-header-cell *matHeaderCellDef> First Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="last-name">
+    <th mat-header-cell *matHeaderCellDef> Last Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

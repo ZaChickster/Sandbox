@@ -5,9 +5,10 @@ using System.Text;
 
 namespace Sandbox.Messaging
 {
-	public class DataCollection
+	public class DataCollection : IDeviceStatus
 	{
 		public ObjectId Id { get; set; }
+		public DateTime When { get; set; }
 		public string DeviceId { get; set; }
 		public string Status { get; set; }
 	}

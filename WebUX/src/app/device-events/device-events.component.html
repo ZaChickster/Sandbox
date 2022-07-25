@@ -1,21 +1,35 @@
-<h2>Device Events</h2>
-<input [(ngModel)]='deviceId' /><button (click)='getEvents()'>Load</button>
-<br/>
-<div class="datacontainer">
-  <table>
-    <thead>
-      <tr>
-        <th>Unique ID</th>
-        <th>Device ID</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let model of allData">
-        <td>{{ model.id }}</td>
-        <td>{{ model.deviceId }}</td>
-        <td>{{ model.status }}</td>
-      </tr>
-    </tbody>
+<h2>View Data Collection</h2>
+
+<div class="wrapper">
+  <mat-form-field appearance="outline">
+    <mat-label>How Many Rows?</mat-label>
+    <input matInput placeholder="Rows To Display" [(ngModel)]='desiredRows'>
+    <mat-icon matSuffix>waves</mat-icon>
+    <mat-hint>How many rows of data would you like to see?</mat-hint>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)='getEvents()'>Load Data</button>
+  <br/>
+
+  <table mat-table [dataSource]="allData" class="mat-elevation-z8 demo-table">
+    <!-- Position Column -->
+    <ng-container matColumnDef="when">
+      <th mat-header-cell *matHeaderCellDef> When </th>
+      <td mat-cell *matCellDef="let element"> {{ element.when | date:'medium' }} </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="device-id">
+      <th mat-header-cell *matHeaderCellDef> Device Id </th>
+      <td mat-cell *matCellDef="let element"> {{ element.deviceId }} </td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{ element.status }} </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>
