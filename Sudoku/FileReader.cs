@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace Sudoku
+namespace Sandbox.Sudoku
 {
 	public interface IFileReader
 	{

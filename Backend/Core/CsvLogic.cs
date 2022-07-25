@@ -1,28 +1,29 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Backend.DataAccess;
-using Backend.Models;
 using CsvHelper;
 using CsvHelper.Configuration;
+using Sandbox.Backend.DataAccess;
+using Sandbox.Backend.Models;
 
 namespace Backend.Core
 {
+	public interface ICsvLogic
+	{
+		Task<int> InsertCsvData(Stream file, CancellationToken token);
+		Task<IEnumerable<FileData>> GetData(CancellationToken token);
+	}
+
 	public class CsvLogic : ICsvLogic
 	{
 		private readonly ISampleDataAccess _data;
 
-		private readonly Configuration _configuration = new Configuration
-		{
-			HasHeaderRecord = true
-		};
-
 		public CsvLogic(ISampleDataAccess data)
 		{
-			_data = data;
-			_configuration.RegisterClassMap<FileDataMap>();
+			_data = data;			
 		}
 
 		public async Task<int> InsertCsvData(Stream file, CancellationToken token)
@@ -36,9 +37,15 @@ namespace Backend.Core
 
 		public IEnumerable<FileData> ReadFile(Stream file)
 		{
-			using (StreamReader reader = new StreamReader(file))
-			using (var csv = new CsvReader(reader, _configuration))
+			var config = new CsvConfiguration(CultureInfo.InvariantCulture)
 			{
+				HasHeaderRecord = true
+			};
+
+			using (StreamReader reader = new StreamReader(file))
+			using (var csv = new CsvReader(reader, config))
+			{
+				csv.Context.RegisterClassMap<FileDataMap>();
 				return csv.GetRecords<FileData>().ToList();
 			}
 		}

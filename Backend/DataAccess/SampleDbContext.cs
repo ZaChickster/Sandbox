@@ -1,8 +1,17 @@
-﻿using Backend.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Sandbox.Backend.Models;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Backend.DataAccess
+namespace Sandbox.Backend.DataAccess
 {
+	public interface ISampleDbContext : IDisposable
+	{
+		DbSet<FileData> Data { get; set; }
+		Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken);
+	}
+
 	public class SampleDbContext : DbContext, ISampleDbContext
 	{
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
