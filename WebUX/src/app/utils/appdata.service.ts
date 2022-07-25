@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FileData } from './filedata.model';
@@ -52,14 +52,20 @@ export class AppDataService {
     }));
   }
 
-  public assignDevice(deviceId: string): Observable<any> {
+  public assignDevice(deviceId: number): Observable<any> {
     const assignUrl = `${environment.apiRoot}/api/device/${deviceId}/assign`;
 
     return this.httpClient.get<any>(assignUrl, {});
   }
 
-  public loadDeviceData(deviceId: string): Observable<DataCollection[]> {
-    const dataUrl = `${environment.apiRoot}/api/device/${deviceId}/datacollection`;
+  public messageDevice(deviceId: number, message: string): Observable<any> {
+    const messageUrl = `${environment.apiRoot}/api/device/${deviceId}/sendmessage?message=${message}`;
+
+    return this.httpClient.get<any>(messageUrl, {});
+  }
+
+  public loadDeviceData(desiredRows: number): Observable<DataCollection[]> {
+    const dataUrl = `${environment.apiRoot}/api/device/${desiredRows}/datacollection`;
 
     return this.httpClient.get<any[]>(dataUrl).pipe(map(result => {
       const converted: DataCollection[] = [];

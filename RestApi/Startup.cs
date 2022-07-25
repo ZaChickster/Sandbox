@@ -1,12 +1,14 @@
 using Backend.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sandbox.Backend.DataAccess;
 using Sandbox.Messaging;
 using Sandbox.RestApi.Consumer;
+using Sandbox.RestApi.SignalR;
 
 namespace Sandbox.RestApi
 {
@@ -22,19 +24,24 @@ namespace Sandbox.RestApi
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddSignalR();
 			services.AddControllers();
 
 			services.AddCors(options =>
 			{
-				options.AddDefaultPolicy(builder => { builder.WithOrigins("http://localhost:4200", "https://localhost:4200"); });
+				options.AddPolicy("CorsPolicy",
+					builder => builder.WithOrigins("http://localhost:4200")
+					.AllowAnyMethod()
+					.AllowAnyHeader()
+					.AllowCredentials());
 			});
 
-			services.SetupRabbitMq<DataCollectionConsumer>()
-				.AddScoped<ICsvLogic, CsvLogic>()
+			services.AddScoped<ICsvLogic, CsvLogic>()
 				.AddScoped<ISampleDataAccess, SampleDataAccess>()
 				.AddScoped<ISampleDbContext, SampleDbContext>()
 				.AddScoped<ISampleDbContext, SampleDbContext>()
-				.AddScoped<IMongoDbDataAccess, MongoDbDataAccess>();
+				.AddScoped<IMongoDbDataAccess, MongoDbDataAccess>()
+				.SetupRabbitMq();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,14 +56,19 @@ namespace Sandbox.RestApi
 
 			app.UseRouting();
 
-			app.UseCors();
+			app.UseCors("CorsPolicy");
 
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>
 			{
+				endpoints.MapHub<BasicHub>("/trigger");
 				endpoints.MapControllers();
 			});
+
+			SharedHubContext = app.ApplicationServices.GetService<IHubContext<BasicHub>>();
 		}
+
+        public static IHubContext<BasicHub> SharedHubContext { get; set; }
 	}
 }

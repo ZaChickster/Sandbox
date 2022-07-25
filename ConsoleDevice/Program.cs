@@ -49,9 +49,9 @@ namespace Sandbox.ConsoleDevice
 						break;
 				}
 
-				await endpoint.Send(new DataCollection { DeviceId = deviceId, Status = status });
-				Console.WriteLine("status sent");
-				Thread.Sleep(2500);
+				await endpoint.Send(new DataCollection { DeviceId = deviceId, Status = status, When = DateTime.UtcNow });
+				Console.WriteLine($"status {status} sent");
+				Thread.Sleep(25000);
 			}
 		}
 	}
