@@ -32,11 +32,29 @@ namespace Sandbox.Backend.Test.DataAccess
 		}
 
 		[Fact]
-		public async Task GetDataForDevice_Should_Get_List_From_Mongo()
+		public async Task GetStatusData_Should_Get_List_From_Mongo()
 		{
-			List<DataCollection> pulled = await _mongoDb.GetData(25);
+			List<DataCollection> pulled = await _mongoDb.GetStatusData(5);
 
-			Assert.True(pulled.Count == 25);
+			Assert.True(pulled.Count == 5);
 		}
+
+		[Fact]
+        public async Task PersistStatus_Should_Get_Add_To_Collection()
+        {
+            long before = await _mongoDb.GetStatusDataCount();
+            
+            await _mongoDb.PersistStatus(new DataCollection
+            {
+                DeviceId = Guid.NewGuid().ToString(),
+				Status = "For Testing",
+				When = DateTime.UtcNow
+
+			});
+
+            long after = await _mongoDb.GetStatusDataCount();
+
+            Assert.True(after > before);
+        }
 	}
 }

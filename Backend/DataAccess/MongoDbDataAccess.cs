@@ -11,7 +11,7 @@ namespace Sandbox.Backend.DataAccess
 		Task InsertDevice(Device device);
 		Task<Device> GetDevice(string deviceId);
 		Task PersistStatus(DataCollection message);
-		Task<List<DataCollection>> GetData(int rowsToReturn);
+		Task<List<DataCollection>> GetStatusData(int rowsToReturn);
 	}
 
 
@@ -44,7 +44,7 @@ namespace Sandbox.Backend.DataAccess
 			await _mongoDb.GetCollection<DataCollection>("devicestatus").InsertOneAsync(message);
 		}
 
-		public async Task<List<DataCollection>> GetData(int rowsToReturn)
+		public async Task<List<DataCollection>> GetStatusData(int rowsToReturn)
 		{
 			var result = await _mongoDb
 				.GetCollection<DataCollection>("devicestatus")
@@ -55,5 +55,14 @@ namespace Sandbox.Backend.DataAccess
 
 			return result;
 		}
+
+        public async Task<long> GetStatusDataCount()
+        {
+            var result = await _mongoDb
+                .GetCollection<DataCollection>("devicestatus")
+                .CountDocumentsAsync(_ => true);
+
+            return result;
+        }
 	}
 }

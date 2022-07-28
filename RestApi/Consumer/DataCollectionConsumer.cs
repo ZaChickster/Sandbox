@@ -28,7 +28,7 @@ namespace Sandbox.RestApi.Consumer
 
             if (Startup.SharedHubContext != null)
             {
-                await Startup.SharedHubContext.Clients.All.SendAsync("messageRecieved", new { status = context.Message.Status, deviceId = context.Message.DeviceId });
+                await Startup.SharedHubContext.Clients.All.SendAsync("messageReceived", new { status = context.Message.Status, deviceId = context.Message.DeviceId });
 			}			
 		}
 	}
