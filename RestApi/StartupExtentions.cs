@@ -22,7 +22,7 @@ namespace Sandbox.Messaging
 					services.AddScoped<IDataCollectionConsumer, DataCollectionConsumer>();
 					var sp = services.BuildServiceProvider();					
 					e.Consumer(() => sp.GetService<IDataCollectionConsumer>());
-				});
+                });
 
 				cfg.ExchangeType = ExchangeType.Direct;
 			});
