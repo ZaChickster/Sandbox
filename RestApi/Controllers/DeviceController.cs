@@ -83,7 +83,7 @@ namespace Sandbox.RestApi.Controllers
 		{
 			try
 			{
-				List<DataCollection> data = await _mongoDb.GetData(rowsToReturn);
+				List<DataCollection> data = await _mongoDb.GetStatusData(rowsToReturn);
 
 				return Ok(data);
 			}

@@ -1,1 +1,1 @@
-﻿../ConsoleDevice/bin/Debug/net5.0/ConsoleDevice.exe
+﻿../ConsoleDevice/bin/Debug/net6.0/ConsoleDevice.exe
